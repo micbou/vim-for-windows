@@ -91,7 +91,7 @@ def deploy(args):
     # Commit changes
     commit_message = ('Bump version to ' + latest_tag[1:] + '\n\n' +
                       '\n'.join(logs))
-    subprocess.check_call([git, 'commit', '--amend', '-m', commit_message])
+    subprocess.check_call([git, 'commit', '-m', commit_message])
 
     # Set latest tag to the last commit
     subprocess.check_call([git, 'tag', '-f', latest_tag])
