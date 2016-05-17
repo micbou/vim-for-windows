@@ -42,10 +42,10 @@ artifacts:
     - path: vim\nsis\$(vim_artifact)
       name: vim
 deploy:
-    - tag: $(appveyor_repo_tag_name)
+    - provider: GitHub
+      tag: $(appveyor_repo_tag_name)
       release: $(vim_version)
       description: $(git_description)
-      provider: GitHub
       auth_token:
           secure: gm7NWc/q5jrfYIipgRGs8Xd8+4BmWeEAEgfnCJYcu2EpgFdAxIMcT6ixBCE2gg5F
       artifact: vim
