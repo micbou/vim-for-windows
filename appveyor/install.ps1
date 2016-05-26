@@ -138,7 +138,7 @@ $env:PATH = "C:\gettext;$env:PATH"
 # Install NSIS
 #
 
-$nsis_installer_name = "nsis-3.0b2-setup.exe"
+$nsis_installer_name = "nsis-3.0rc1-setup.exe"
 $nsis_url = "http://prdownloads.sourceforge.net/nsis/$nsis_installer_name"
 $nsis_output = "$env:APPVEYOR_BUILD_FOLDER\$nsis_installer_name"
 (New-Object System.Net.WebClient).DownloadFile($nsis_url, $nsis_output)
