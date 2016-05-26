@@ -6,7 +6,7 @@ environment:
     perl_revision: 299574
     python2_version: 2.7.11
     python3_version: 3.5.1
-    racket_version: 6.4
+    racket_version: 6.5
     ruby_version: 2.3.0
     tcl_version: 8.6.4.1
     tcl_revision: 299124
