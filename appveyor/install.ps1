@@ -135,15 +135,10 @@ if ($env:arch -eq 64) {
 $env:PATH = "C:\gettext;$env:PATH"
 
 #
-# Install NSIS
+# Add NSIS to PATH.
 #
 
-$nsis_installer_name = "nsis-3.0rc1-setup.exe"
-$nsis_url = "http://prdownloads.sourceforge.net/nsis/$nsis_installer_name"
-$nsis_output = "$env:APPVEYOR_BUILD_FOLDER\$nsis_installer_name"
-(New-Object System.Net.WebClient).DownloadFile($nsis_url, $nsis_output)
-Start-Process "$nsis_output" -ArgumentList "/S /D=C:\NSIS"
-$env:PATH = "C:\NSIS;$env:PATH"
+$env:PATH = "C:\Program Files (x86)\NSIS;$env:PATH"
 
 #
 # Install UPX.
