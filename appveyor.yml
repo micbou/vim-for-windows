@@ -1,5 +1,5 @@
 version: "{build}"
-skip_non_tags: true
+#skip_non_tags: true
 environment:
     lua_version: 5.3.2
     perl_version: 5.22.1.2201
@@ -26,8 +26,8 @@ environment:
         # TODO: cannot use MSVC 14 because of the following error on 32-bit:
         #   msvcrt.lib(_chandler4gs_.obj) : error LNK2001: unresolved external
         #   symbol __except_handler4_common
-        - arch: 32
-          msvc: 12
+        #- arch: 32
+        #  msvc: 12
         - arch: 64
           msvc: 12
 install:
