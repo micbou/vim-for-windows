@@ -22,10 +22,12 @@ $env:PATH = "C:\Lua;$env:PATH"
 
 if ($env:arch -eq 32) {
     $perl_arch = "x86-64int"
+    $perl_revision = $env:perl32_revision
 } else {
     $perl_arch = "x64"
+    $perl_revision = $env:perl64_revision
 }
-$perl_folder = "ActivePerl-$env:perl_version-MSWin32-$perl_arch-$env:perl_revision"
+$perl_folder = "ActivePerl-$env:perl_version-MSWin32-$perl_arch-$perl_revision"
 $perl_url = "http://downloads.activestate.com/ActivePerl/releases/$env:perl_version/$perl_folder.zip"
 $perl_output = "$env:APPVEYOR_BUILD_FOLDER\$perl_folder.zip"
 (New-Object System.Net.WebClient).DownloadFile($perl_url, $perl_output)
