@@ -164,8 +164,3 @@ $pip_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$pip_installer_name"
 Invoke-Download $pip_url $pip_output
 Invoke-Expression "& python '$pip_output'"
 Invoke-Expression "& C:\Python27\Scripts\pip install requests twitter"
-
-# Fix test86 failure introduced by python 2.7.11
-# TODO: check if this is still needed when python 2.7.12 is released.
-Invoke-Expression "& C:\Windows\System32\reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:32"
-Invoke-Expression "& C:\Windows\System32\reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:64"
