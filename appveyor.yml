@@ -27,9 +27,9 @@ environment:
         #   msvcrt.lib(_chandler4gs_.obj) : error LNK2001: unresolved external
         #   symbol __except_handler4_common
         - arch: 32
-          msvc: 12
+          msvc: 11
         - arch: 64
-          msvc: 12
+          msvc: 11
 install:
     - ps: appveyor\install.ps1
 build_script:
@@ -54,7 +54,7 @@ deploy:
       on:
           branch: master
           appveyor_repo_tag: true
-          msvc: 12
+          msvc: 11
 # Deploy to Bintray and send a tweet
 after_deploy:
     - python appveyor\bintray.py upload generic vim %vim_version% vim\nsis\%vim_artifact% --override
