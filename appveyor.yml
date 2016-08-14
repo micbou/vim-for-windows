@@ -62,3 +62,5 @@ after_deploy:
     - python appveyor\bintray.py publish generic vim %vim_version%
     - python appveyor\bintray.py download-list generic %vim_artifact% add
     - python appveyor\twitt.py "%vim_tweet%"
+cache:
+    - '%APPVEYOR_BUILD_FOLDER%\downloads -> appveyor.yml'
