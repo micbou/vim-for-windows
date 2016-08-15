@@ -12,7 +12,7 @@ Invoke-Expression "git submodule update --init"
 
 $lua_url = "http://sourceforge.net/projects/luabinaries/files/$env:lua_version/Windows%20Libraries/Dynamic/lua-$($env:lua_version)_Win$($env:arch)_dllw4_lib.zip/download"
 $lua_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\lua.zip"
-Invoke-Download $lua_url $lua_output
+Retry-Command -Command 'Invoke-Download' -Args @{ Url = $lua_url; Filepath = $lua_output }
 Invoke-Expression "& 7z x '$lua_output' -oC:\Lua" | out-null
 $env:PATH = "C:\Lua;$env:PATH"
 

@@ -1,11 +1,11 @@
 # Download a file if not already existing.
 Function Invoke-Download {
     Param (
-             [Parameter(Mandatory=$TRUE)]
-             [System.Uri] $url,
-             [Parameter(Mandatory=$TRUE)]
-             [string] $filepath
-          )
+        [Parameter(Mandatory=$TRUE)]
+        [System.Uri] $url,
+        [Parameter(Mandatory=$TRUE)]
+        [string] $filepath
+    )
 
     # Make sure the destination directory exists.
     # System.IO.FileInfo works even if the file/dir doesn't exist, which is better
@@ -25,13 +25,13 @@ Function Invoke-Download {
 # Clone a repository to a specific branch or checkout to this branch if already existing.
 Function Invoke-GitClone {
     Param (
-             [Parameter(Mandatory=$TRUE)]
-             [System.Uri] $repository,
-             [Parameter(Mandatory=$TRUE)]
-             [string] $directory,
-             [Parameter(Mandatory=$TRUE)]
-             [string] $branch
-          )
+        [Parameter(Mandatory=$TRUE)]
+        [System.Uri] $repository,
+        [Parameter(Mandatory=$TRUE)]
+        [string] $directory,
+        [Parameter(Mandatory=$TRUE)]
+        [string] $branch
+    )
 
     If (-not (Test-Path $directory)) {
         Invoke-Expression "git clone $repository -b $branch --depth 1 -q $directory"
@@ -47,8 +47,8 @@ Function Invoke-GitClone {
 # Invokes a Cmd.exe shell script and updates the environment.
 function Invoke-CmdScript {
     param(
-            [String] $scriptName
-         )
+        [String] $scriptName
+    )
     $cmdLine = """$scriptName"" $args & set"
     & $Env:SystemRoot\system32\cmd.exe /c $cmdLine |
     Select-String '^([^=]*)=(.*)$' | Foreach-Object {
@@ -66,9 +66,9 @@ function Get-Environment {
 # Restores the environment to a previous state.
 function Restore-Environment {
     param(
-            [parameter(Mandatory=$TRUE)]
-            [System.Collections.DictionaryEntry[]] $oldEnv
-         )
+        [parameter(Mandatory=$TRUE)]
+        [System.Collections.DictionaryEntry[]] $oldEnv
+    )
     # Remove any added variables.
     Compare-Object $oldEnv $(Get-Environment) -property Key -passthru |
     Where-Object { $_.SideIndicator -eq "=>" } |
@@ -77,4 +77,40 @@ function Restore-Environment {
     Compare-Object $oldEnv $(Get-Environment) -property Value -passthru |
     Where-Object { $_.SideIndicator -eq "<=" } |
     Foreach-Object { Set-Item Env:$($_.Name) $_.Value }
+}
+
+Function Retry-Command
+{
+    Param (
+        [Parameter(Mandatory=$true)]
+        [string] $command,
+        [Parameter(Mandatory=$true)]
+        [hashtable] $args,
+        [Parameter(Mandatory=$false)]
+        [int] $retries = 5,
+        [Parameter(Mandatory=$false)]
+        [int] $secondsDelay = 2
+    )
+
+    # Setting ErrorAction to Stop is important. This ensures any errors that
+    # occur in the command are treated as terminating errors, and will be
+    # caught by the catch block.
+    $args.ErrorAction = "Stop"
+
+    $retrycount = 0
+    $completed = $false
+
+    While (-not $completed) {
+        Try {
+            & $command @args
+            $completed = $true
+        } Catch {
+            If ($retrycount -ge $retries) {
+                Throw
+            } Else {
+                Start-Host $secondsDelay
+                $retrycount++
+            }
+        }
+    }
 }
