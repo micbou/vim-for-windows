@@ -278,7 +278,7 @@ def build_translations(args):
         raise RuntimeError('nmake tool not found.')
 
     gettext_path = find_executable('gettext')
-    if not os.path.isfile( gettext_path ):
+    if not os.path.isfile(gettext_path):
         raise RuntimeError('gettext tool not found')
 
     cmd = [nmake,
@@ -288,7 +288,7 @@ def build_translations(args):
            'VIMRUNTIME={0}'.format(RUNTIME_DIR),
            'install-all']
 
-    subprocess.check_call(cmd, cwd = TRANSLATIONS_DIR)
+    subprocess.check_call(cmd, cwd=TRANSLATIONS_DIR)
 
 
 def clean_up():

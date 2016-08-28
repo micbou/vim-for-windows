@@ -46,6 +46,15 @@ def generate_package(args):
     shutil.copy(os.path.join(ROOT_DIR, 'README.txt'),
                 os.path.join(ROOT_DIR, 'runtime'))
 
+    shutil.copy(os.path.join(SOURCES_DIR, 'vim.exe'),
+                os.path.join(SOURCES_DIR, 'vimw32.exe'))
+
+    shutil.copy(os.path.join(SOURCES_DIR, 'tee', 'tee.exe'),
+                os.path.join(SOURCES_DIR, 'teew32.exe'))
+
+    shutil.copy(os.path.join(SOURCES_DIR, 'xxd', 'xxd.exe'),
+                os.path.join(SOURCES_DIR, 'xxdw32.exe'))
+
     shutil.copy(os.path.join(SOURCES_DIR, 'install.exe'),
                 os.path.join(SOURCES_DIR, 'installw32.exe'))
 
@@ -54,12 +63,6 @@ def generate_package(args):
 
     shutil.copy(os.path.join(SOURCES_DIR, 'gvim.exe'),
                 os.path.join(SOURCES_DIR, 'gvim_ole.exe'))
-
-    shutil.copy(os.path.join(SOURCES_DIR, 'xxd', 'xxd.exe'),
-                os.path.join(SOURCES_DIR, 'xxdw32.exe'))
-
-    shutil.copy(os.path.join(SOURCES_DIR, 'vim.exe'),
-                os.path.join(SOURCES_DIR, 'vimw32.exe'))
 
     shutil.copy(os.path.join(GVIM_EXT_DIR, 'gvimext.dll'),
                 os.path.join(GVIM_EXT_DIR, 'gvimext64.dll'))
