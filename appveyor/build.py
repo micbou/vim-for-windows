@@ -144,11 +144,11 @@ def get_ruby_build_args(args):
         return []
 
     ruby_path = get_ruby_path(args)
-    ruby_ver_long = args.ruby_version
+    ruby_api_ver_long = args.ruby_version
     ruby_ver = get_minimal_version(args.ruby_version)
 
     return ['RUBY={0}'.format(ruby_path),
-            'RUBY_VER_LONG={0}'.format(ruby_ver_long),
+            'RUBY_API_VER_LONG={0}'.format(ruby_api_ver_long),
             'RUBY_VER={0}'.format(ruby_ver),
             'DYNAMIC_RUBY=yes',
             'RUBY_MSVCRT_NAME=msvcrt']
