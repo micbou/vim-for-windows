@@ -56,6 +56,17 @@ $racket_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$racket_installer_name"
 Invoke-Download $racket_url $racket_output
 Start-Process "$racket_output" -ArgumentList "/S /D=C:\Racket" -Wait
 
+$paths = Get-ChildItem -Path "C:\Racket\lib"
+foreach ($path in $paths)
+{
+    if ($path.Name -match "libracket(?<racket_library_version>[a-z0-9_]+)\.dll")
+    {
+        $env:racket_library_version = $matches['racket_library_version']
+        break
+    }
+}
+
+Write-Output "Racket library version: $env:racket_library_version"
 $env:PATH = "C:\Racket;$env:PATH"
 
 #
