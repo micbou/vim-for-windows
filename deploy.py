@@ -10,9 +10,10 @@ from distutils.spawn import find_executable
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 VIM_DIR = os.path.join(SCRIPT_DIR, 'vim')
 
-VIM_COMMIT = re.compile('patch (?P<version>.*) '
+VIM_COMMIT = re.compile('patch (?P<version>.*): .* '
                         'Problem:(?:\s+)(?P<problem>.*) '
-                        'Solution:(?:\s+)(?P<solution>.*)')
+                        'Solution:(?:\s+)(?P<solution>.*)' )
+COMMIT_SEPARATOR = '------'
 CHANGELOG_LINE = '{version}: {problem} {solution}'
 
 
@@ -22,8 +23,9 @@ def replace_multiplespaces_by_one(string):
 
 def format_logs(patches):
     formatted_patches = []
-    for patch in patches.splitlines():
-        match = VIM_COMMIT.match(patch)
+    for patch in patches.split(COMMIT_SEPARATOR):
+        onelined_patch = ' '.join(patch.strip().split('\n'))
+        match = VIM_COMMIT.match(onelined_patch)
         if match:
             problem = replace_multiplespaces_by_one(match.group('problem'))
             solution = replace_multiplespaces_by_one(match.group('solution'))
@@ -72,7 +74,7 @@ def deploy(args):
 
     # Format logs
     patches = subprocess.check_output(
-      [git, 'log', '--pretty=format:%s',
+      [git, 'log', '--pretty=format:%B{0}'.format(COMMIT_SEPARATOR),
        current_hash + '..HEAD']).strip().decode('utf8')
     logs = format_logs(patches)
 
