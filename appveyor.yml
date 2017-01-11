@@ -54,7 +54,7 @@ deploy:
       on:
           branch: master
           appveyor_repo_tag: true
-          msvc: 11
+          msvc: 12
 # Deploy to Bintray and send a tweet
 after_deploy:
     - python appveyor\bintray.py upload generic vim %vim_version% vim\nsis\%vim_artifact% --override
