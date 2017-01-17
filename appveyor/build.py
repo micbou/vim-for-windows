@@ -60,9 +60,9 @@ def get_perl_path(args):
     if args.perl_path:
         return args.perl_path
 
-    perl_version = get_minimal_version(args.perl_version)
-
-    return r'C:\Perl{0}\perl'.format(perl_version)
+    if args.arch == 64:
+        return r'C:\Perl64'
+    return r'C:\Perl'
 
 
 def get_perl_build_args(args):
@@ -309,7 +309,8 @@ def parse_arguments():
     parser.add_argument('--lua-version', type=str,
                         help='set Lua version')
     parser.add_argument('--perl-path', type=str,
-                        help='set Perl folder (default: C:\Perl{ver}\perl)')
+                        help='set Perl folder (default: C:\Perl '
+                        'or C:\Perl64 depending on architecture)')
     parser.add_argument('--perl-version', type=str,
                         help='set Perl version')
     parser.add_argument('--python2-path', type=str,

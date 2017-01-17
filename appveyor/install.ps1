@@ -23,23 +23,18 @@ $env:PATH = "C:\Lua;$env:PATH"
 If ($env:arch -eq 32) {
     $perl_arch = "x86-64int"
     $perl_revision = $env:perl32_revision
+    $perl_folder = "C:\Perl"
 } Else {
     $perl_arch = "x64"
     $perl_revision = $env:perl64_revision
+    $perl_folder = "C:\Perl64"
 }
-$perl_folder = "ActivePerl-$env:perl_version-MSWin32-$perl_arch-$perl_revision"
-$perl_url = "http://downloads.activestate.com/ActivePerl/releases/$env:perl_version/$perl_folder.zip"
-$perl_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$perl_folder.zip"
+$perl_installer_name = "ActivePerl-$env:perl_version-MSWin32-$perl_arch-$perl_revision.exe"
+$perl_url = "http://downloads.activestate.com/ActivePerl/releases/$env:perl_version/$perl_installer_name"
+$perl_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$perl_installer_name"
 Invoke-Download $perl_url $perl_output
-Invoke-Expression "& 7z x '$perl_output' -oC:\" | out-null
-
-# Deduce minimal version format from full version (ex: 5.22.1.2201 gives 522).
-$perl_version_array = $env:perl_version.Split('.')
-$perl_minimal_version = $perl_version_array[0] + $perl_version_array[1]
-
-Move-Item C:\$perl_folder C:\Perl$perl_minimal_version
-
-$env:PATH = "C:\Perl$perl_minimal_version\perl\bin;$env:PATH"
+Start-Process "$perl_output" -ArgumentList "/qn" -Wait
+$env:PATH = "$perl_folder\bin;$env:PATH"
 
 #
 # Install Racket
