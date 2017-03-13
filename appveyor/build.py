@@ -277,7 +277,7 @@ def build_translations(args):
     if not os.path.isfile(nmake):
         raise RuntimeError('nmake tool not found.')
 
-    gettext_path = find_executable('gettext')
+    gettext_path = find_executable('xgettext')
     if not os.path.isfile(gettext_path):
         raise RuntimeError('gettext tool not found')
 

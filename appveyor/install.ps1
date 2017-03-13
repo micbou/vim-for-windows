@@ -127,21 +127,21 @@ Start-Process "$tcl_output" -ArgumentList "--directory C:\Tcl" -Wait
 $env:PATH = "C:\Tcl\bin;$env:PATH"
 
 #
-# Get libintl.dll, iconv.dll, and possibly libwinpthread.dll.
+# Get libintl and libiconv.
 #
-$gettext_installer_name = "gettext0.19.6-iconv1.14-shared-64.exe"
-$gettext_url = "https://github.com/mlocati/gettext-iconv-windows/releases/download/v0.19.6-v1.14/$gettext_installer_name"
+
+$gettext_installer_name = "gettext0.19.8.1-iconv1.14-shared-$env:arch.exe"
+$gettext_url = "https://github.com/mlocati/gettext-iconv-windows/releases/download/v0.19.8.1-v1.14/$gettext_installer_name"
 $gettext_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$gettext_installer_name"
 Invoke-Download $gettext_url $gettext_output
 Start-Process "$gettext_output" -ArgumentList "/verysilent /dir=C:\gettext" -Wait
-Copy-Item C:\gettext\libintl-8.dll "$env:APPVEYOR_BUILD_FOLDER\vim\runtime"
-Copy-Item C:\gettext\libiconv-2.dll "$env:APPVEYOR_BUILD_FOLDER\vim\runtime"
-# Copy libwinpthread only for 64-bit.
-If ($env:arch -eq 64) {
-    Copy-Item C:\gettext\libwinpthread-1.dll "$env:APPVEYOR_BUILD_FOLDER\vim\runtime"
+Copy-Item C:\gettext\bin\libintl-8.dll "$env:APPVEYOR_BUILD_FOLDER\vim\runtime"
+Copy-Item C:\gettext\bin\libiconv-2.dll "$env:APPVEYOR_BUILD_FOLDER\vim\runtime"
+If (Test-Path C:\gettext\bin\libgcc_s_sjlj-1.dll) {
+    Copy-Item C:\gettext\bin\libgcc_s_sjlj-1.dll "$env:APPVEYOR_BUILD_FOLDER\vim\runtime"
 }
 
-$env:PATH = "C:\gettext;$env:PATH"
+$env:PATH = "C:\gettext\bin;$env:PATH"
 
 #
 # Add NSIS to PATH.
