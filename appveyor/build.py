@@ -198,7 +198,8 @@ def get_build_args(args, gui=True):
                        'IME=yes',
                        'MBYTE=yes',
                        'ICONV=yes',
-                       'DEBUG=no'])
+                       'DEBUG=no',
+                       'TERMINAL=yes'])
 
     if args.credit:
         build_args.extend(['USERNAME={0}'.format(args.credit),

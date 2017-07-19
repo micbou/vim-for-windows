@@ -170,3 +170,20 @@ $pip_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$pip_installer_name"
 Invoke-Download $pip_url $pip_output
 Invoke-Expression "& python '$pip_output'"
 Invoke-Expression "& C:\Python27\Scripts\pip install requests twitter"
+
+#
+# Install winpty.
+#
+If ($env:arch -eq 32) {
+    $winpty_arch = "ia32"
+} Else {
+    $winpty_arch = "x64"
+}
+$winpty_archive_name = "winpty-0.4.3-msvc2015.zip"
+$winpty_url = "https://github.com/rprichard/winpty/releases/download/0.4.3/$winpty_archive_name"
+$winpty_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$winpty_archive_name"
+Invoke-Download $winpty_url $winpty_output
+Invoke-Expression "& 7z x '$winpty_output' -oC:\winpty" | out-null
+Get-ChildItem "C:\winpty\$winpty_arch\bin"
+$env:PATH = "C:\winpty\$winpty_arch\bin;$env:PATH"
+Write-Host $env:PATH
