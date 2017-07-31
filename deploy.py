@@ -110,14 +110,51 @@ def deploy(args):
     subprocess.check_call([git, 'push', 'origin', latest_tag])
 
 
+def revert(args):
+    git = find_executable('git')
+    if git is None:
+        raise RuntimeError('git tool not found.')
+
+    # Switch to master branch
+    subprocess.check_call([git, 'checkout', 'master'])
+
+    # Reset to previous commit
+    subprocess.check_call([git, 'reset', '--hard', 'HEAD~1'])
+
+    # Update submodule
+    subprocess.check_call([git, 'submodule', 'update'])
+
+    # Get latest tag
+    latest_commit = subprocess.check_output(
+        [git, 'rev-list', '--tags', '--max-count=1']).strip().decode('utf8')
+    latest_tag = subprocess.check_output(
+        [git, 'describe', '--tags', latest_commit]).strip().decode('utf8')
+
+    # Remove latest upstream tag in case it already exists
+    if len(subprocess.check_output([git, 'ls-remote', 'origin', latest_tag])):
+        subprocess.check_call([git, 'push', 'origin',
+                               ':{0}'.format(latest_tag)])
+
+    # Remove latest tag locally
+    subprocess.check_call([git, 'tag', '-d', latest_tag])
+
+    # Push the changes
+    subprocess.check_call([git, 'push', '-f'])
+
+
 def parse_arguments():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--revert', action = 'store_true',
+                        help = 'Revert to previous commit')
     return parser.parse_args()
 
 
 def main():
     args = parse_arguments()
-    deploy(args)
+    if args.revert:
+        revert(args)
+    else:
+        deploy(args)
 
 
 if __name__ == '__main__':
