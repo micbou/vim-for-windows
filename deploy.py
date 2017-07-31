@@ -4,6 +4,7 @@ import argparse
 import os
 import subprocess
 import re
+import tempfile
 import textwrap
 from distutils.spawn import find_executable
 
@@ -63,7 +64,7 @@ def deploy(args):
       [git, 'rev-parse', 'HEAD']).strip().decode('utf8')
 
     # Fetch vim changes
-    subprocess.check_call([git, 'pull'])
+    subprocess.check_call([git, 'pull', 'origin', 'master'])
 
     # Check if upstream contains changes
     changes = subprocess.check_output([git, 'log', '--oneline',
@@ -93,7 +94,11 @@ def deploy(args):
     # Commit changes
     commit_message = ('Bump version to ' + latest_tag[1:] + '\n\n' +
                       '\n'.join(logs))
-    subprocess.check_call([git, 'commit', '-m', commit_message])
+
+    # Get commit message from a temporary file
+    with tempfile.NamedTemporaryFile(delete=False) as commit_message_file:
+      commit_message_file.write(commit_message.encode('utf8'))
+      subprocess.check_call([git, 'commit', '-F', commit_message_file.name])
 
     # Set latest tag to the last commit
     subprocess.check_call([git, 'tag', '-f', latest_tag])
