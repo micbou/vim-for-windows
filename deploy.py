@@ -89,14 +89,15 @@ def deploy(args):
     os.chdir(SCRIPT_DIR)
 
     # Add changes
-    subprocess.check_call([git, 'add', '.'])
+    subprocess.check_call([git, 'add', 'vim'])
 
     # Commit changes
     commit_message = ('Bump version to ' + latest_tag[1:] + '\n\n' +
                       '\n'.join(logs))
 
     # Get commit message from a temporary file
-    with tempfile.NamedTemporaryFile(delete=False) as commit_message_file:
+    with tempfile.NamedTemporaryFile(buffering=0,
+                                     delete=False) as commit_message_file:
       commit_message_file.write(commit_message.encode('utf8'))
       subprocess.check_call([git, 'commit', '-F', commit_message_file.name])
 
