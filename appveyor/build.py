@@ -19,9 +19,6 @@ APPVEYOR_MAKE_PATH = os.path.join(SOURCES_DIR, 'Make_mvc_appveyor.mak')
 MSVC_BIN_DIR = os.path.join('..', '..', 'VC', 'bin')
 VC_VARS_SCRIPT = os.path.join('..', '..', 'VC', 'vcvarsall.bat')
 
-SDK_INCLUDE_DIR = (r'C:\Program Files (x86)\Microsoft SDKs\Windows'
-                   r'\v7.1A\Include')
-
 VERSION_REGEX = re.compile('([0-9]+).([0-9]+)(.([0-9]+)){0,2}')
 
 
@@ -220,13 +217,6 @@ def get_build_args(args, gui=True):
 def build_vim(args, gui=True):
     os.chdir(SOURCES_DIR)
 
-    new_env = os.environ.copy()
-
-    if not os.path.exists(SDK_INCLUDE_DIR):
-        raise RuntimeError('SDK include folder does not exist.')
-
-    new_env['SDK_INCLUDE_DIR'] = SDK_INCLUDE_DIR
-
     msvc_dir = get_msvc_dir(args)
 
     nmake = os.path.join(msvc_dir, 'nmake.exe')
@@ -242,13 +232,13 @@ def build_vim(args, gui=True):
     clean_cmd.extend(['&', nmake, '/f', APPVEYOR_MAKE_PATH, 'clean'])
     clean_cmd.extend(build_args)
 
-    subprocess.check_call(clean_cmd, env=new_env)
+    subprocess.check_call(clean_cmd)
 
     build_cmd = vc_vars_cmd
     build_cmd.extend(['&', nmake, '/f', APPVEYOR_MAKE_PATH])
     build_cmd.extend(build_args)
 
-    subprocess.check_call(build_cmd, env=new_env)
+    subprocess.check_call(build_cmd)
 
 
 def get_arch_from_python_interpreter():
