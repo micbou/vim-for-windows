@@ -64,7 +64,8 @@ def deploy(args):
       [git, 'rev-parse', 'HEAD']).strip().decode('utf8')
 
     # Pull vim changes
-    subprocess.check_call([git, 'pull', '--force', 'origin', 'master'])
+    subprocess.check_call(
+      [git, 'pull', '--tags', '--force', 'origin', 'master'])
 
     # Check if upstream contains changes
     changes = subprocess.check_output([git, 'log', '--oneline',
