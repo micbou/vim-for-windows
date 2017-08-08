@@ -188,18 +188,18 @@ def get_build_args(args, gui=True):
                            'OLE=yes',
                            'GIME=yes',
                            'DIRECTX=yes'])
-        # MSVC 14 will fail to build gvim with XPM image support enabled.
-        # See https://groups.google.com/forum/#!topic/vim_dev/6DfnCX9TjYI
-        # TODO: find a way to fix this.
-        if args.msvc == 14:
-            build_args.append('XPM=no')
 
     build_args.extend(['FEATURES=HUGE',
                        'IME=yes',
                        'MBYTE=yes',
                        'ICONV=yes',
                        'DEBUG=no',
-                       'TERMINAL=yes'])
+                       'TERMINAL=yes',
+                       # Compile with /MD instead of /MT.
+                       # See https://stackoverflow.com/a/757537
+                       # This is needed when compiling with MSVC 14 and TCL
+                       # support on 32-bit.
+                       'USE_MSVCRT=yes'])
 
     if args.credit:
         build_args.extend(['USERNAME={0}'.format(args.credit),

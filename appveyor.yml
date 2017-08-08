@@ -29,13 +29,10 @@ environment:
     twitter_access_token_secret:
         secure: z66tC6HWZZ7dXS5SG49amgEGBfR6vX3SXQUjgV1GmFuaVFDXr67XZfK/dG3x8+pA
     matrix:
-        # TODO: cannot use MSVC 14 because of the following error on 32-bit:
-        #   msvcrt.lib(_chandler4gs_.obj) : error LNK2001: unresolved external
-        #   symbol __except_handler4_common
         - arch: 32
-          msvc: 12
+          msvc: 14
         - arch: 64
-          msvc: 12
+          msvc: 14
 install:
     - ps: appveyor\install.ps1
 build_script:
