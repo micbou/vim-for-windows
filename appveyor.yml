@@ -1,7 +1,7 @@
 version: "{build}"
 environment:
     # https://sourceforge.net/projects/luabinaries/files/
-    lua_version: 5.3.3
+    lua_version: 5.3.4
     # https://www.activestate.com/activeperl/downloads
     perl_version: 5.24.1.2402
     perl32_revision: 401627
