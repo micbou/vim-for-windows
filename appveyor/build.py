@@ -16,8 +16,7 @@ TRANSLATIONS_DIR = os.path.join(SOURCES_DIR, 'po')
 MAKE_PATH = os.path.join(SOURCES_DIR, 'Make_mvc.mak')
 APPVEYOR_MAKE_PATH = os.path.join(SOURCES_DIR, 'Make_mvc_appveyor.mak')
 
-MSVC_BIN_DIR = os.path.join('..', '..', 'VC', 'bin')
-VC_VARS_SCRIPT = os.path.join('..', '..', 'VC', 'vcvarsall.bat')
+MSVC_BIN_DIR = os.path.join('..', '..', 'VC')
 
 VERSION_REGEX = re.compile('([0-9]+).([0-9]+)(.([0-9]+)){0,2}')
 
@@ -171,13 +170,36 @@ def get_msvc_dir(args):
         return os.path.join(os.environ['VS120COMNTOOLS'], MSVC_BIN_DIR)
     if args.msvc == 14:
         return os.path.join(os.environ['VS140COMNTOOLS'], MSVC_BIN_DIR)
-    raise RuntimeError('msvc parameter should be 11, 12, or 14.')
+    if args.msvc == 15:
+        return get_msvc15_dir()
+    raise RuntimeError('msvc parameter should be 11, 12, 14, or 15.')
+
+
+def get_msvc15_dir():
+    vswhere = os.path.join(os.environ['ProgramFiles(x86)'],
+                           'Microsoft Visual Studio',
+                           'Installer',
+                           'vswhere.exe')
+    if not os.path.exists(vswhere):
+        raise RuntimeError('cannot find vswhere. '
+                           'VS 2017 version 15.2 or later is required.')
+
+    installation_path = subprocess.check_output(
+        [vswhere, '-latest', '-property', 'installationPath']
+    ).strip().decode('utf8')
+    return os.path.join(installation_path, 'VC', 'Auxiliary', 'Build')
 
 
 def get_vc_mod(arch):
     if arch == 64:
         return 'x86_amd64'
     return 'x86'
+
+
+def get_nmake_cmd(args):
+    msvc_dir = get_msvc_dir(args)
+    vc_vars_script_path = os.path.join(msvc_dir, 'vcvarsall.bat')
+    return [vc_vars_script_path, get_vc_mod(args.arch), '&', 'nmake.exe']
 
 
 def get_build_args(args, gui=True):
@@ -218,28 +240,13 @@ def get_build_args(args, gui=True):
 def build_vim(args, gui=True):
     os.chdir(SOURCES_DIR)
 
-    msvc_dir = get_msvc_dir(args)
-
-    nmake = os.path.join(msvc_dir, 'nmake.exe')
-    if not os.path.exists(nmake):
-        raise RuntimeError('nmake tool not found.')
-
+    nmake_cmd = get_nmake_cmd(args)
     build_args = get_build_args(args, gui)
 
-    vc_vars_script_path = os.path.join(msvc_dir, VC_VARS_SCRIPT)
-    vc_vars_cmd = [vc_vars_script_path, get_vc_mod(args.arch)]
+    subprocess.check_call(nmake_cmd +
+                          ['/f', APPVEYOR_MAKE_PATH, 'clean'] + build_args)
 
-    clean_cmd = vc_vars_cmd
-    clean_cmd.extend(['&', nmake, '/f', APPVEYOR_MAKE_PATH, 'clean'])
-    clean_cmd.extend(build_args)
-
-    subprocess.check_call(clean_cmd)
-
-    build_cmd = vc_vars_cmd
-    build_cmd.extend(['&', nmake, '/f', APPVEYOR_MAKE_PATH])
-    build_cmd.extend(build_args)
-
-    subprocess.check_call(build_cmd)
+    subprocess.check_call(nmake_cmd + ['/f', APPVEYOR_MAKE_PATH] + build_args)
 
 
 def get_arch_from_python_interpreter():
@@ -262,24 +269,17 @@ def remove_progress_bars():
 
 
 def build_translations(args):
-    msvc_dir = get_msvc_dir(args)
-
-    nmake = os.path.join(msvc_dir, 'nmake.exe')
-    if not os.path.isfile(nmake):
-        raise RuntimeError('nmake tool not found.')
-
     gettext_path = find_executable('xgettext')
     if not gettext_path:
         raise RuntimeError('gettext tool not found')
 
-    cmd = [nmake,
-           '/f',
-           'Make_mvc.mak',
-           'GETTEXT_PATH={0}'.format(os.path.dirname(gettext_path)),
-           'VIMRUNTIME={0}'.format(RUNTIME_DIR),
-           'install-all']
-
-    subprocess.check_call(cmd, cwd=TRANSLATIONS_DIR)
+    nmake_cmd = get_nmake_cmd(args)
+    subprocess.check_call(
+        nmake_cmd +
+        ['/f', 'Make_mvc.mak',
+         'GETTEXT_PATH={0}'.format(os.path.dirname(gettext_path)),
+         'VIMRUNTIME={0}'.format(RUNTIME_DIR),
+         'install-all'], cwd=TRANSLATIONS_DIR)
 
 
 def clean_up():
@@ -289,8 +289,8 @@ def clean_up():
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--msvc', type=int, choices=[11, 12, 14],
-                        default=14, help='choose the Microsoft Visual '
+    parser.add_argument('--msvc', type=int, choices=[11, 12, 14, 15],
+                        default=15, help='choose the Microsoft Visual '
                         'Studio version (default: %(default)s).')
     parser.add_argument('--arch', type=int, choices=[32, 64],
                         help='force architecture to 32 or 64 bits on '

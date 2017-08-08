@@ -26,8 +26,8 @@ def check_vim_command(command):
         [vim_exe, '-i', 'NONE',
                   '-u', 'NONE',
                   '-U', 'NONE',
-                  '-V1',
                   '-nNes',
+                  '-c', 'set verbose=1',
                   '-c', command,
                   '-c', 'qall!'],
                   stderr = subprocess.STDOUT).decode('utf8')

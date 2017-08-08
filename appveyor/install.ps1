@@ -87,7 +87,14 @@ Invoke-GitClone "https://github.com/ruby/ruby.git" $ruby_directory "$ruby_branch
 Push-Location -Path $ruby_directory
 
 # Set Visual Studio environment variables.
-$vc_vars_script_path = (Get-Item env:"VS$($env:msvc)0COMNTOOLS").Value + "..\..\VC\vcvarsall.bat"
+If ($env:msvc -eq 15) {
+    $vswhere = (Get-Item env:"ProgramFiles(x86)").Value + "\Microsoft Visual Studio\Installer\vswhere.exe"
+    $installation_path = Invoke-Expression "& '$vswhere' -latest -property installationPath" | Out-String
+    $vc_vars_script_path = $installation_path.Trim() + "\VC\Auxiliary\Build\vcvarsall.bat"
+} Else {
+    $vc_vars_script_path = (Get-Item env:"VS$($env:msvc)0COMNTOOLS").Value + "..\..\VC\vcvarsall.bat"
+}
+
 If ($env:arch -eq 32) {
     $vc_vars_arch = "x86"
 } Else {
@@ -102,11 +109,17 @@ Invoke-Expression "& nmake .config.h.time"
 
 Restore-Environment $old_env
 
+If ($env:msvc -eq 15) {
+    $ruby_msvc_version = "140"
+} Else {
+    $ruby_msvc_version = "$($env:msvc)0"
+}
+
 If ($env:arch -eq 32) {
-    $ruby_include_folder = "i386-mswin32_$($env:msvc)0"
+    $ruby_include_folder = "i386-mswin32_$ruby_msvc_version"
     $env:ruby_path = "C:\Ruby$ruby_minimal_version"
 } Else {
-    $ruby_include_folder = "x64-mswin64_$($env:msvc)0"
+    $ruby_include_folder = "x64-mswin64_$ruby_msvc_version"
     $env:ruby_path = "C:\Ruby$ruby_minimal_version-x64"
 }
 

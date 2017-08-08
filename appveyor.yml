@@ -30,15 +30,15 @@ environment:
     twitter_access_token_secret:
         secure: z66tC6HWZZ7dXS5SG49amgEGBfR6vX3SXQUjgV1GmFuaVFDXr67XZfK/dG3x8+pA
     matrix:
-        - arch: 32
-          msvc: 14
-        - arch: 64
-          msvc: 14
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+          arch: 32
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+          arch: 64
 install:
+    - ps: appveyor\variables.ps1
     - ps: appveyor\install.ps1
 build_script:
     - python appveyor\build.py --msvc %msvc% --arch %arch% --lua-version %lua_version% --perl-path %perl_path% --perl-version %perl_version% --python2-version %python2_version% --python3-version %python3_version% --racket-library-version %racket_library_version% --ruby-version %ruby_version% --tcl-version %tcl_version% --credit "%vim_compilation_credit%"
-    - ps: appveyor\variables.ps1
     - python appveyor\package.py %vim_artifact%
 test_script:
     - python appveyor\test.py --msvc %msvc%

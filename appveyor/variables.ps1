@@ -18,17 +18,26 @@
 #   git_description: release notes on GitHub
 #   bintray_description: description on Bintray
 
-function GetMajorMinorVersion($version) {
+Function GetMajorMinorVersion($version) {
     $version_array = $version.Split('.')
     $version_array[0] + '.' + $version_array[1]
 }
 
 $vim_version = $env:appveyor_repo_tag_name.Substring(1)
 
-if ($env:arch -eq 32) {
+If ($env:arch -eq 32) {
     $vim_arch = "x86"
-} else {
+} Else {
     $vim_arch = "x64"
+}
+
+$msvc = $env:appveyor_build_worker_image.Substring(14)
+If ($msvc -eq 2013) {
+    $env:msvc = 12
+} ElseIf ($msvc -eq 2015) {
+    $env:msvc = 14
+} ElseIf ($msvc -eq 2017) {
+    $env:msvc = 15
 }
 
 $vim_executable_name = "vim$vim_version-$vim_arch.exe"
