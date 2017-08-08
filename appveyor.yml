@@ -12,7 +12,7 @@ environment:
     # https://racket-lang.org/download/
     racket_version: 6.10
     # https://rubyinstaller.org/
-    ruby_version: 2.3.0
+    ruby_version: 2.4.0
     # https://www.activestate.com/activetcl/downloads
     tcl_version: 8.6.4.1
     tcl_revision: 299124
