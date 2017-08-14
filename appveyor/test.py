@@ -40,8 +40,17 @@ def test_vim(args):
     test_cmd = [nmake, '-f',
                 'Make_dos.mak',
                 'VIMPROG={0}'.format(gvim_path)]
-
-    subprocess.check_call(test_cmd)
+    if args.tests:
+        for test in args.tests:
+            root, _ = os.path.splitext(test)
+            test_cmd.append(root + '.res')
+        test_cmd.append('report')
+    try:
+        subprocess.check_call(test_cmd)
+    finally:
+        subprocess.check_call([nmake, '-f',
+                               'Make_dos.mak',
+                               'clean'])
 
 
 def parse_arguments():
@@ -49,6 +58,7 @@ def parse_arguments():
     parser.add_argument('--msvc', type=int, choices=[11, 12, 14],
                         default=12, help='choose the Microsoft Visual '
                         'Studio version (default: %(default)s).')
+    parser.add_argument('tests', nargs='*', help='list of tests')
 
     return parser.parse_args()
 
