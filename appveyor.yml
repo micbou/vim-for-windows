@@ -43,6 +43,7 @@ build_script:
     - python appveyor\package.py %vim_artifact%
 test_script:
     - python appveyor\test.py --msvc %msvc%
+    - python appveyor\check.py --lua-version %lua_version% --perl-version %perl_version% --python2-version %python2_version% --python3-version %python3_version% --racket-version %racket_version% --ruby-version %ruby_version% --tcl-version %tcl_version%
 artifacts:
     - path: vim\nsis\$(vim_artifact)
       name: vim
