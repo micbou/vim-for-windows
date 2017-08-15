@@ -62,7 +62,10 @@ foreach ($path in $paths)
 }
 
 Write-Output "Racket library version: $env:racket_library_version"
-$env:PATH = "C:\Racket;$env:PATH"
+$env:PATH = "C:\Racket;C:\Racket\lib;$env:PATH"
+
+# Install Racket r5rs library required by test70.in Vim test.
+raco pkg install --auto r5rs-lib
 
 #
 # Install Ruby
