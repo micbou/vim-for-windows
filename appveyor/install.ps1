@@ -187,6 +187,4 @@ $winpty_url = "https://github.com/rprichard/winpty/releases/download/0.4.3/$winp
 $winpty_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$winpty_archive_name"
 Invoke-Download $winpty_url $winpty_output
 Invoke-Expression "& 7z x '$winpty_output' -oC:\winpty" | out-null
-Get-ChildItem "C:\winpty\$winpty_arch\bin"
 $env:PATH = "C:\winpty\$winpty_arch\bin;$env:PATH"
-Write-Host $env:PATH
