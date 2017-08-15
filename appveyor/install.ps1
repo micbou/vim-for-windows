@@ -23,18 +23,21 @@ $env:PATH = "C:\Lua;$env:PATH"
 If ($env:arch -eq 32) {
     $perl_arch = "x86-64int"
     $perl_revision = $env:perl32_revision
-    $perl_folder = "C:\Perl"
+    $perl_folder = "C:\ActivePerl"
 } Else {
     $perl_arch = "x64"
     $perl_revision = $env:perl64_revision
-    $perl_folder = "C:\Perl64"
+    $perl_folder = "C:\ActivePerl64"
 }
 $perl_installer_name = "ActivePerl-$env:perl_version-MSWin32-$perl_arch-$perl_revision.exe"
 $perl_url = "http://downloads.activestate.com/ActivePerl/releases/$env:perl_version/$perl_installer_name"
 $perl_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$perl_installer_name"
 Invoke-Download $perl_url $perl_output
-Start-Process "$perl_output" -ArgumentList "/qn" -Wait
+New-Item C:\TempActivePerl -ItemType directory | Out-Null
+Start-Process "$perl_output" -ArgumentList "/extract:C:\TempActivePerl /exenoui /exnoupdates /quiet /norestart" -Wait
+Move-Item C:\TempActivePerl\* $perl_folder
 $env:PATH = "$perl_folder\bin;$env:PATH"
+$env:perl_path = $perl_folder
 
 #
 # Install Racket
