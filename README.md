@@ -19,7 +19,7 @@ for Python 2):
  - add Lua root folder to load `lua53.dll`;
  - add Perl `bin` folder to load `perl524.dll`;
  - add Python 3 root folder to load `python36.dll`;
- - add Racket `lib` folder to load `libracket*.dll`;
+ - add Racket `lib` folder to load `libracket3m_a36f0g.dll`;
  - add Ruby `bin` folder to load `msvcrt-ruby230.dll` on 32-bit or
    `x64-msvcrt-ruby230.dll` on 64-bit;
  - add Tcl `bin` folder to load `tcl86.dll`.
