@@ -290,7 +290,7 @@ def clean_up():
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--msvc', type=int, choices=[11, 12, 14],
-                        default=12, help='choose the Microsoft Visual '
+                        default=14, help='choose the Microsoft Visual '
                         'Studio version (default: %(default)s).')
     parser.add_argument('--arch', type=int, choices=[32, 64],
                         help='force architecture to 32 or 64 bits on '
