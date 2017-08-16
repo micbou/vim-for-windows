@@ -13,10 +13,7 @@ environment:
     racket_version: 6.10
     # https://rubyinstaller.org/
     # NOTE: this is Ruby API version.
-    # FIXME: Ruby 2.4.1 library from the Ruby on Windows installer has a MinGW
-    # dependency (libgmp-10.dll). This makes it inconvenient to use unless
-    # distributing the dependency along Vim.
-    ruby_version: 2.3.0
+    ruby_version: 2.4.0
     # https://www.activestate.com/activetcl/downloads
     tcl_version: 8.6.4.1
     tcl_revision: 299124
@@ -45,6 +42,10 @@ build_script:
     - python appveyor\package.py %vim_artifact%
 test_script:
     - python appveyor\test.py --msvc %msvc%
+    # This path is required to load the Ruby interface as it contains a
+    # dependency of the Ruby library (libgmp-10.dll).
+    # NOTE: tests hang on 32-bit if we add this path before running them.
+    - set PATH=%ruby_path%\bin\ruby_builtin_dlls;%PATH%
     - python appveyor\check.py --lua-version %lua_version% --perl-version %perl_version% --python2-version %python2_version% --python3-version %python3_version% --racket-version %racket_version% --ruby-version %ruby_version% --tcl-version %tcl_version%
 artifacts:
     - path: vim\nsis\$(vim_artifact)

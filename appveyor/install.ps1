@@ -104,16 +104,16 @@ Restore-Environment $old_env
 
 If ($env:arch -eq 32) {
     $ruby_include_folder = "i386-mswin32_$($env:msvc)0"
-    $ruby_path = "C:\Ruby$ruby_minimal_version"
+    $env:ruby_path = "C:\Ruby$ruby_minimal_version"
 } Else {
     $ruby_include_folder = "x64-mswin64_$($env:msvc)0"
-    $ruby_path = "C:\Ruby$ruby_minimal_version-x64"
+    $env:ruby_path = "C:\Ruby$ruby_minimal_version-x64"
 }
 
-Copy-Item .ext\include\$ruby_include_folder $ruby_path\include\ruby-$env:ruby_version -Recurse
+Copy-Item .ext\include\$ruby_include_folder $env:ruby_path\include\ruby-$env:ruby_version -Recurse
 Pop-Location
 
-$env:PATH = "$ruby_path\bin;$env:PATH"
+$env:PATH = "$env:ruby_path\bin;$env:PATH"
 
 #
 # Install Tcl

@@ -10,7 +10,7 @@ interfaces:
  - [Python 2.7](https://www.python.org/downloads/release/python-2713/);
  - [Python 3.6](https://www.python.org/downloads/release/python-362/);
  - [Racket 6.10](https://racket-lang.org/download/);
- - [Ruby 2.3](https://rubyinstaller.org/downloads/);
+ - [Ruby 2.4](https://rubyinstaller.org/downloads/);
  - [Tcl 8.6](https://www.activestate.com/activetcl/downloads).
 
 You need to download and install these softwares to use the corresponding
@@ -20,8 +20,8 @@ for Python 2):
  - add Perl `bin` folder to load `perl524.dll`;
  - add Python 3 root folder to load `python36.dll`;
  - add Racket `lib` folder to load `libracket3m_a36f0g.dll`;
- - add Ruby `bin` folder to load `msvcrt-ruby230.dll` on 32-bit or
-   `x64-msvcrt-ruby230.dll` on 64-bit;
+ - add Ruby `bin` and `bin\ruby_builtin_dlls` folders to load
+   `msvcrt-ruby240.dll` on 32-bit or `x64-msvcrt-ruby240.dll` on 64-bit;
  - add Tcl `bin` folder to load `tcl86.dll`.
 
 Terminal support is also available. You need to [download
