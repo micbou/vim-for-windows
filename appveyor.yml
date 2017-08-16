@@ -13,7 +13,9 @@ environment:
     racket_version: 6.10
     # https://rubyinstaller.org/
     # NOTE: this is Ruby API version.
-    # FIXME: Vim interface does not support Ruby 2.4.
+    # FIXME: Ruby 2.4.1 library from the Ruby on Windows installer has a MinGW
+    # dependency (libgmp-10.dll). This makes it inconvenient to use unless
+    # distributing the dependency along Vim.
     ruby_version: 2.3.0
     # https://www.activestate.com/activetcl/downloads
     tcl_version: 8.6.4.1
