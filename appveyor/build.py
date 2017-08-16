@@ -202,6 +202,12 @@ def get_nmake_cmd(args):
     return [vc_vars_script_path, get_vc_mod(args.arch), '&', 'nmake.exe']
 
 
+def get_xpm(arch):
+    if arch == 64:
+        return 'xpm\\x64'
+    return 'xpm\\x86'
+
+
 def get_build_args(args, gui=True):
     build_args = [get_arch_build_args(args)]
 
@@ -209,7 +215,8 @@ def get_build_args(args, gui=True):
         build_args.extend(['GUI=yes',
                            'OLE=yes',
                            'GIME=yes',
-                           'DIRECTX=yes'])
+                           'DIRECTX=yes',
+                           'XPM={0}'.format(get_xpm(args.arch))])
 
     build_args.extend(['FEATURES=HUGE',
                        'IME=yes',
