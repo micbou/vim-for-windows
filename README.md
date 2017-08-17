@@ -22,7 +22,7 @@ for Python 2):
  - add Racket `lib` folder to load `libracket3m_a36f0g.dll`;
  - add Ruby `bin` and `bin\ruby_builtin_dlls` folders to load
    `msvcrt-ruby240.dll` on 32-bit or `x64-msvcrt-ruby240.dll` on 64-bit;
- - add Tcl `bin` folder to load `tcl86.dll`.
+ - add Tcl `bin` folder to load `tcl86t.dll`.
 
 Terminal support is also available. You need to [download
 winpty](https://github.com/rprichard/winpty) then put the files `winpty.dll` and

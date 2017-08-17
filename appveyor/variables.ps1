@@ -31,7 +31,7 @@ If ($env:arch -eq 32) {
     $vim_arch = "x64"
 }
 
-$msvc = $env:appveyor_build_worker_image.Substring(14)
+$msvc = $env:appveyor_build_worker_image.Substring($env:appveyor_build_worker_image.Length-4)
 If ($msvc -eq 2013) {
     $env:msvc = 12
 } ElseIf ($msvc -eq 2015) {

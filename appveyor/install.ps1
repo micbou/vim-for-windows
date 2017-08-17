@@ -23,11 +23,11 @@ $env:PATH = "C:\Lua;$env:PATH"
 If ($env:arch -eq 32) {
     $perl_arch = "x86-64int"
     $perl_revision = $env:perl32_revision
-    $perl_folder = "C:\ActivePerl"
+    $env:perl_path = "C:\ActivePerl"
 } Else {
     $perl_arch = "x64"
     $perl_revision = $env:perl64_revision
-    $perl_folder = "C:\ActivePerl64"
+    $env:perl_path = "C:\ActivePerl64"
 }
 $perl_installer_name = "ActivePerl-$env:perl_version-MSWin32-$perl_arch-$perl_revision.exe"
 $perl_url = "http://downloads.activestate.com/ActivePerl/releases/$env:perl_version/$perl_installer_name"
@@ -35,9 +35,8 @@ $perl_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$perl_installer_name"
 Invoke-Download $perl_url $perl_output
 New-Item C:\TempActivePerl -ItemType directory | Out-Null
 Start-Process "$perl_output" -ArgumentList "/extract:C:\TempActivePerl /exenoui /exnoupdates /quiet /norestart" -Wait
-Move-Item C:\TempActivePerl\* $perl_folder
-$env:PATH = "$perl_folder\bin;$env:PATH"
-$env:perl_path = $perl_folder
+Move-Item C:\TempActivePerl\* $env:perl_path
+$env:PATH = "$env:perl_path\bin;$env:PATH"
 
 #
 # Install Racket
@@ -133,17 +132,22 @@ $env:PATH = "$env:ruby_path\bin;$env:PATH"
 #
 
 If ($env:arch -eq 32) {
-    $tcl_arch = "ix86"
+    $tcl_arch = "x86"
+    $env:tcl_version = $env:tcl32_version
+    $tcl_revision = $env:tcl32_revision
 } Else {
-    $tcl_arch = "x86_64"
+    $tcl_arch = "x64"
+    $env:tcl_version = $env:tcl64_version
+    $tcl_revision = $env:tcl64_revision
 }
-$tcl_installer_name = "ActiveTcl$env:tcl_version.$env:tcl_revision-win32-$tcl_arch-threaded.exe"
+$tcl_installer_name = "ActiveTcl-$env:tcl_version-MSWin32-$tcl_arch-$tcl_revision.exe"
 $tcl_url = "http://downloads.activestate.com/ActiveTcl/releases/$env:tcl_version/$tcl_installer_name"
 $tcl_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$tcl_installer_name"
 Invoke-Download $tcl_url $tcl_output
-Start-Process "$tcl_output" -ArgumentList "--directory C:\Tcl" -Wait
+Start-Process "$tcl_output" -ArgumentList "/quiet /norestart" -Wait
 
-$env:PATH = "C:\Tcl\bin;$env:PATH"
+$env:tcl_path = "C:\ActiveTcl"
+$env:PATH = "$env:tcl_path\bin;$env:PATH"
 
 #
 # Get libintl and libiconv.

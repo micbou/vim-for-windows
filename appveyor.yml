@@ -15,8 +15,10 @@ environment:
     # NOTE: this is Ruby API version.
     ruby_version: 2.4.0
     # https://www.activestate.com/activetcl/downloads
-    tcl_version: 8.6.4.1
-    tcl_revision: 299124
+    tcl32_version: 8.6.6.8607
+    tcl32_revision: 403667
+    tcl64_version: 8.6.6.8606
+    tcl64_revision: 401995
     vim_compilation_credit: micbou <contact@micbou.com>
     bintray_username: micbou
     bintray_api_key:
@@ -30,15 +32,22 @@ environment:
     twitter_access_token_secret:
         secure: z66tC6HWZZ7dXS5SG49amgEGBfR6vX3SXQUjgV1GmFuaVFDXr67XZfK/dG3x8+pA
     matrix:
-        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+        # FIXME: Tcl support cannot be compiled in with the current image of
+        # Visual Studio 2017. Linking ActiveTcl fails with the following error:
+        #
+        #   fatal error C1047: The object or library file 'tclstub86.lib' was
+        #   created with an older compiler than other objects; rebuild old
+        #   objects and libraries
+        #
+        - APPVEYOR_BUILD_WORKER_IMAGE: Previous Visual Studio 2017
           arch: 32
-        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+        - APPVEYOR_BUILD_WORKER_IMAGE: Previous Visual Studio 2017
           arch: 64
 install:
     - ps: appveyor\variables.ps1
     - ps: appveyor\install.ps1
 build_script:
-    - python appveyor\build.py --msvc %msvc% --arch %arch% --lua-version %lua_version% --perl-path %perl_path% --perl-version %perl_version% --python2-version %python2_version% --python3-version %python3_version% --racket-library-version %racket_library_version% --ruby-version %ruby_version% --ruby-platform %ruby_platform% --tcl-version %tcl_version% --credit "%vim_compilation_credit%"
+    - python appveyor\build.py --msvc %msvc% --arch %arch% --lua-version %lua_version% --perl-path %perl_path% --perl-version %perl_version% --python2-version %python2_version% --python3-version %python3_version% --racket-library-version %racket_library_version% --ruby-version %ruby_version% --ruby-platform %ruby_platform% --tcl-path %tcl_path% --tcl-version %tcl_version% --credit "%vim_compilation_credit%"
     - python appveyor\package.py %vim_artifact%
 test_script:
     - python appveyor\test.py --msvc %msvc%
