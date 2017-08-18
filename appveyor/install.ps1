@@ -187,14 +187,6 @@ $env:PATH = "C:\upx391w;$env:PATH"
 # Configure Python.
 #
 
-# Download and install pip for Bintray script requirements.
-$pip_installer_name = "get-pip.py"
-$pip_url = "https://bootstrap.pypa.io/get-pip.py"
-$pip_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$pip_installer_name"
-Invoke-Download $pip_url $pip_output
-Invoke-Expression "& python '$pip_output'"
-Invoke-Expression "& C:\Python27\Scripts\pip install requests twitter"
-
 # Add Python 3 to PATH.
 $python3_version_array = $env:python3_version.Split('.')
 $python3_minimal_version = $python3_version_array[0] + $python3_version_array[1]
@@ -204,6 +196,14 @@ If ($env:arch -eq 32) {
     $python3_path = "C:\Python$python3_minimal_version-x64"
 }
 $env:PATH = "$python3_path;$env:PATH"
+
+# Download and install pip for Bintray script requirements.
+$pip_installer_name = "get-pip.py"
+$pip_url = "https://bootstrap.pypa.io/get-pip.py"
+$pip_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$pip_installer_name"
+Invoke-Download $pip_url $pip_output
+Invoke-Expression "& python '$pip_output'"
+Invoke-Expression "& $python3_path\Scripts\pip install requests twitter"
 
 #
 # Install winpty.
