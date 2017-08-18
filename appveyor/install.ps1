@@ -110,7 +110,7 @@ Invoke-Expression "& nmake .config.h.time"
 Restore-Environment $old_env
 
 If ($env:msvc -eq 15) {
-    $ruby_msvc_version = "140"
+    $ruby_msvc_version = "141"
 } Else {
     $ruby_msvc_version = "$($env:msvc)0"
 }
