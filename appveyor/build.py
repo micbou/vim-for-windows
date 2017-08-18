@@ -135,6 +135,17 @@ def get_ruby_path(args):
     return r'C:\Ruby{0}'.format(ruby_version)
 
 
+def get_ruby_platform(args):
+    if args.ruby_platform:
+        return args.ruby_platform
+
+    msvcrt = min(args.msvc * 10, 140)
+
+    if args.arch == 32:
+        return 'i386-mswin32_' + str(msvcrt)
+    return 'x64-mswin64_' + str(msvcrt)
+
+
 def get_ruby_build_args(args):
     if not args.ruby_version:
         return []
@@ -142,12 +153,14 @@ def get_ruby_build_args(args):
     ruby_path = get_ruby_path(args)
     ruby_api_ver_long = args.ruby_version
     ruby_ver = get_minimal_version(args.ruby_version)
+    ruby_platform = get_ruby_platform(args)
 
     return ['RUBY={0}'.format(ruby_path),
             'RUBY_API_VER_LONG={0}'.format(ruby_api_ver_long),
             'RUBY_VER={0}'.format(ruby_ver),
             'DYNAMIC_RUBY=yes',
-            'RUBY_MSVCRT_NAME=msvcrt']
+            'RUBY_MSVCRT_NAME=msvcrt',
+            'RUBY_PLATFORM={0}'.format(ruby_platform)]
 
 
 def get_tcl_build_args(args):
@@ -329,6 +342,8 @@ def parse_arguments():
                         help='set Ruby folder (default: C:\Ruby{ver})')
     parser.add_argument('--ruby-version', type=str,
                         help='set Ruby version')
+    parser.add_argument('--ruby-platform', type=str,
+                        help='set Ruby platform')
     parser.add_argument('--tcl-path', type=str, default='C:\Tcl',
                         help='set Tcl folder (default: C:\Tcl)')
     parser.add_argument('--tcl-version', type=str,

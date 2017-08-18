@@ -110,20 +110,20 @@ Invoke-Expression "& nmake .config.h.time"
 Restore-Environment $old_env
 
 If ($env:msvc -eq 15) {
-    $ruby_msvc_version = "141"
+    $ruby_msvc_version = "140"
 } Else {
     $ruby_msvc_version = "$($env:msvc)0"
 }
 
 If ($env:arch -eq 32) {
-    $ruby_include_folder = "i386-mswin32_$ruby_msvc_version"
+    $env:ruby_platform = "i386-mswin32_$ruby_msvc_version"
     $env:ruby_path = "C:\Ruby$ruby_minimal_version"
 } Else {
-    $ruby_include_folder = "x64-mswin64_$ruby_msvc_version"
+    $env:ruby_platform = "x64-mswin64_$ruby_msvc_version"
     $env:ruby_path = "C:\Ruby$ruby_minimal_version-x64"
 }
 
-Copy-Item .ext\include\$ruby_include_folder $env:ruby_path\include\ruby-$env:ruby_version -Recurse
+Copy-Item .ext\include\$env:ruby_platform $env:ruby_path\include\ruby-$env:ruby_version -Recurse
 Pop-Location
 
 $env:PATH = "$env:ruby_path\bin;$env:PATH"
