@@ -206,7 +206,7 @@ Invoke-Expression "& python '$pip_output'"
 Invoke-Expression "& $python3_path\Scripts\pip install requests twitter"
 
 #
-# Install winpty.
+# Download winpty and copy the winpty.dll and winpty-agent.exe files to the repository folder.
 #
 If ($env:arch -eq 32) {
     $winpty_arch = "ia32"
@@ -218,4 +218,5 @@ $winpty_url = "https://github.com/rprichard/winpty/releases/download/0.4.3/$winp
 $winpty_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$winpty_archive_name"
 Invoke-Download $winpty_url $winpty_output
 Invoke-Expression "& 7z x '$winpty_output' -oC:\winpty" | out-null
-$env:PATH = "C:\winpty\$winpty_arch\bin;$env:PATH"
+Move-Item "C:\winpty\$winpty_arch\bin\winpty.dll" $env:APPVEYOR_BUILD_FOLDER
+Move-Item "C:\winpty\$winpty_arch\bin\winpty-agent.exe" $env:APPVEYOR_BUILD_FOLDER

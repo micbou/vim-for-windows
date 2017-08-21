@@ -2,4 +2,3 @@
 	path = vim
 	url = https://github.com/micbou/vim.git
 	ignore = dirty
-	branch = fix-tcl-dll-name
