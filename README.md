@@ -24,10 +24,7 @@ for Python 2):
    `msvcrt-ruby240.dll` on 32-bit or `x64-msvcrt-ruby240.dll` on 64-bit;
  - add Tcl `bin` folder to load `tcl86t.dll`.
 
-Terminal support is also available. You need to [download
-winpty](https://github.com/rprichard/winpty) then put the files `winpty.dll` and
-`winpty-agent.exe` from the folder `ia32\bin` or `x64\bin` (depending on Vim
-architecture) in your `PATH` to use this feature.
+Terminal support is also available (see `:h terminal`).
 
 ## Why? There is already nightly official Vim binaries for Windows.
 
