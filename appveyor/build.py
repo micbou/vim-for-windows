@@ -169,11 +169,13 @@ def get_tcl_build_args(args):
 
     tcl_ver_long = get_major_minor_version(args.tcl_version)
     tcl_ver = get_minimal_version(args.tcl_version)
+    tcl_dll = 'tcl{0}t.dll'.format(args.tcl_version)
 
     return ['TCL={0}'.format(args.tcl_path),
             'TCL_VER_LONG={0}'.format(tcl_ver_long),
             'TCL_VER={0}'.format(tcl_ver),
-            'DYNAMIC_TCL=yes']
+            'DYNAMIC_TCL=yes',
+            'TCL_DLL={0}'.format(tcl_dll)]
 
 
 def get_msvc_dir(args):
