@@ -15,6 +15,8 @@ $lua_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\lua.zip"
 Retry-Command -Command 'Invoke-Download' -Args @{ Url = $lua_url; Filepath = $lua_output }
 Invoke-Expression "& 7z x '$lua_output' -oC:\Lua" | out-null
 $env:PATH = "C:\Lua;$env:PATH"
+# TODO: use variable for library name.
+Copy-Item "C:\Lua\lua53.dll" $env:APPVEYOR_BUILD_FOLDER
 
 #
 # Install Perl
@@ -37,6 +39,8 @@ New-Item C:\TempActivePerl -ItemType directory | Out-Null
 Start-Process "$perl_output" -ArgumentList "/extract:C:\TempActivePerl /exenoui /exnoupdates /quiet /norestart" -Wait
 Move-Item C:\TempActivePerl\* $env:perl_path
 $env:PATH = "$env:perl_path\bin;$env:PATH"
+# TODO: use variable for library name.
+Copy-Item "$env:perl_path\bin\perl524.dll" $env:APPVEYOR_BUILD_FOLDER
 
 #
 # Install Racket
@@ -65,6 +69,7 @@ foreach ($path in $paths)
 
 Write-Output "Racket library version: $env:racket_library_version"
 $env:PATH = "C:\Racket;C:\Racket\lib;$env:PATH"
+Copy-Item "C:\Racket\lib\libracket$env:racket_library_version.dll" $env:APPVEYOR_BUILD_FOLDER
 
 # Install Racket r5rs library required by test70.in Vim test.
 raco pkg install --auto r5rs-lib
@@ -126,6 +131,11 @@ Copy-Item .ext\include\$env:ruby_platform $env:ruby_path\include\ruby-$env:ruby_
 Pop-Location
 
 $env:PATH = "$env:ruby_path\bin;$env:PATH"
+If ($env:arch -eq 32) {
+  Copy-Item "$env:ruby_path\bin\msvcrt-ruby${ruby_minimal_version}0.dll" $env:APPVEYOR_BUILD_FOLDER
+} Else {
+  Copy-Item "$env:ruby_path\bin\x64-msvcrt-ruby${ruby_minimal_version}0.dll" $env:APPVEYOR_BUILD_FOLDER
+}
 
 #
 # Install Tcl
@@ -148,6 +158,8 @@ Start-Process "$tcl_output" -ArgumentList "/quiet /norestart" -Wait
 
 $env:tcl_path = "C:\ActiveTcl"
 $env:PATH = "$env:tcl_path\bin;$env:PATH"
+# TODO: use variable for library name.
+Copy-Item "$env:tcl_path\bin\tcl86t.dll" $env:APPVEYOR_BUILD_FOLDER
 
 #
 # Get libintl and libiconv.
@@ -187,6 +199,11 @@ $env:PATH = "C:\upx391w;$env:PATH"
 # Configure Python.
 #
 
+# Move Python 2 library.
+# TODO: use variable for library name.
+Copy-Item "C:\Windows\System32\python27.dll" $env:APPVEYOR_BUILD_FOLDER
+
+
 # Add Python 3 to PATH.
 $python3_version_array = $env:python3_version.Split('.')
 $python3_minimal_version = $python3_version_array[0] + $python3_version_array[1]
@@ -196,6 +213,7 @@ If ($env:arch -eq 32) {
     $python3_path = "C:\Python$python3_minimal_version-x64"
 }
 $env:PATH = "$python3_path;$env:PATH"
+Copy-Item "$python3_path\python$python3_minimal_version.dll" $env:APPVEYOR_BUILD_FOLDER
 
 # Download and install pip for Bintray script requirements.
 $pip_installer_name = "get-pip.py"
@@ -218,5 +236,5 @@ $winpty_url = "https://github.com/rprichard/winpty/releases/download/0.4.3/$winp
 $winpty_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$winpty_archive_name"
 Invoke-Download $winpty_url $winpty_output
 Invoke-Expression "& 7z x '$winpty_output' -oC:\winpty" | out-null
-Move-Item "C:\winpty\$winpty_arch\bin\winpty.dll" $env:APPVEYOR_BUILD_FOLDER
-Move-Item "C:\winpty\$winpty_arch\bin\winpty-agent.exe" $env:APPVEYOR_BUILD_FOLDER
+Copy-Item "C:\winpty\$winpty_arch\bin\winpty.dll" $env:APPVEYOR_BUILD_FOLDER
+Copy-Item "C:\winpty\$winpty_arch\bin\winpty-agent.exe" $env:APPVEYOR_BUILD_FOLDER
