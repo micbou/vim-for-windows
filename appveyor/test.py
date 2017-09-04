@@ -10,8 +10,7 @@ ROOT_DIR = os.path.join(SCRIPT_DIR, '..', 'vim')
 SOURCES_DIR = os.path.join(ROOT_DIR, 'src')
 TESTS_DIR = os.path.join(SOURCES_DIR, 'testdir')
 
-MSVC_BIN_DIR = os.path.join('..', '..', 'VC', 'bin')
-VC_VARS_SCRIPT = os.path.join('..', '..', 'VC', 'vcvarsall.bat')
+MSVC_BIN_DIR = os.path.join('..', '..', 'VC')
 
 
 def get_msvc_dir(args):
