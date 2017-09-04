@@ -29,13 +29,9 @@ Terminal support is also available (see `:h terminal`).
 ## Why? There is already nightly official Vim binaries for Windows.
 
 For multiple reasons:
- - no official 64-bit installer;
- - interfaces in the official Vim binaries are not up to date: Python 3.5
-   while 3.6 is available, Racket 6.6 while 6.10 is available, Ruby 2.2 while
-   2.4 is available. I am always trying to support the latest interfaces version
-   in the binaries I am distributing;
- - compiled with the latest version of Microsoft Visual C++ (2017);
- - releases are available on
+ - 64-bit installer;
+ - latest interfaces version;
+ - releases available on
    [Bintray](https://bintray.com/micbou/generic/vim) and announced on
    [Twitter](https://twitter.com/mic_bou) so downloading them is fast (faster
    than GitHub) and it's easy to know when there is a new release (just follow
