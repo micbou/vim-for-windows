@@ -39,9 +39,9 @@ environment:
         #   created with an older compiler than other objects; rebuild old
         #   objects and libraries
         #
-        - APPVEYOR_BUILD_WORKER_IMAGE: Previous Visual Studio 2017
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
           arch: 32
-        - APPVEYOR_BUILD_WORKER_IMAGE: Previous Visual Studio 2017
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
           arch: 64
 install:
     - ps: appveyor\variables.ps1
