@@ -220,3 +220,4 @@ Invoke-Download $winpty_url $winpty_output
 Invoke-Expression "& 7z x '$winpty_output' -oC:\winpty" | out-null
 Move-Item "C:\winpty\$winpty_arch\bin\winpty.dll" $env:APPVEYOR_BUILD_FOLDER
 Move-Item "C:\winpty\$winpty_arch\bin\winpty-agent.exe" $env:APPVEYOR_BUILD_FOLDER
+$env:PATH = "$env:APPVEYOR_BUILD_FOLDER;$env:PATH"
