@@ -93,7 +93,7 @@ def deploy(args):
     remote, _ = remote.split('/')
     if remote != 'origin':
       subprocess.check_call(
-        [git, 'push', '--tags', '--force'])
+        [git, 'push', '--force'])
 
     # Return to script folder
     os.chdir(SCRIPT_DIR)
