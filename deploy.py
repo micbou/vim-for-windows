@@ -86,6 +86,15 @@ def deploy(args):
     latest_tag = subprocess.check_output(
         [git, 'describe', '--tags', latest_commit]).strip().decode('utf8')
 
+    # Push to upstream if remote is not origin
+    remote = subprocess.check_output(
+      [git, 'rev-parse', '--abbrev-ref',
+            'master@\{upstream\}']).strip().decode('utf8')
+    remote, _ = remote.split('/')
+    if remote != 'origin':
+      subprocess.check_call(
+        [git, 'push', '--tags', '--force'])
+
     # Return to script folder
     os.chdir(SCRIPT_DIR)
 
