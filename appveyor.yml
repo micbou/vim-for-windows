@@ -3,9 +3,9 @@ environment:
     # https://sourceforge.net/projects/luabinaries/files/
     lua_version: 5.3.4
     # https://www.activestate.com/activeperl/downloads
-    perl_version: 5.24.1.2402
-    perl32_revision: 401627
-    perl64_revision: 401627
+    perl_version: 5.26.0.2600
+    perl32_revision: 403866
+    perl64_revision: 403866
     # https://www.python.org/downloads/
     python2_version: 2.7.14
     python3_version: 3.6.3

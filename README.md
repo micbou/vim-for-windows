@@ -6,7 +6,7 @@
 Vim 32-bit and 64-bit releases for Windows including support for the following
 interfaces:
  - [Lua 5.3](https://sourceforge.net/projects/luabinaries/files/);
- - [Perl 5.24](https://www.activestate.com/activeperl/downloads);
+ - [Perl 5.26](https://www.activestate.com/activeperl/downloads);
  - [Python 2.7](https://www.python.org/downloads/release/python-2714/);
  - [Python 3.6](https://www.python.org/downloads/release/python-363/);
  - [Racket 6.10.1](https://racket-lang.org/download/);
@@ -17,7 +17,7 @@ You need to download and install these softwares to use the corresponding
 interfaces in Vim. Once installed, add their libraries to your `PATH` (except
 for Python 2):
  - add Lua root folder to load `lua53.dll`;
- - add Perl `bin` folder to load `perl524.dll`;
+ - add Perl `bin` folder to load `perl526.dll`;
  - add Python 3 root folder to load `python36.dll`;
  - add Racket `lib` folder to load `libracket3m_a36f0g.dll`;
  - add Ruby `bin` and `bin\ruby_builtin_dlls` folders to load
