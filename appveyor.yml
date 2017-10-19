@@ -48,7 +48,7 @@ install:
     - ps: appveyor\install.ps1
 build_script:
     - python appveyor\build.py --msvc %msvc% --arch %arch% --lua-version %lua_version% --perl-path %perl_path% --perl-version %perl_version% --python2-version %python2_version% --python3-version %python3_version% --racket-library-version %racket_library_version% --ruby-version %ruby_version% --ruby-platform %ruby_platform% --tcl-path %tcl_path% --tcl-version %tcl_version% --credit "%vim_compilation_credit%"
-    - python appveyor\package.py %vim_artifact%
+    - python appveyor\package.py --msvc %msvc% %vim_artifact%
 test_script:
     - python appveyor\test.py --msvc %msvc%
     # This path is required to load the Ruby interface as it contains a
