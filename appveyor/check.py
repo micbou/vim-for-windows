@@ -33,7 +33,11 @@ def check_vim_command(command):
                   stderr = subprocess.STDOUT).decode('utf8')
 
 
-def check_interface_version(interface_name, command, version_regex, version):
+def check_interface_version(interface_name,
+                            command,
+                            version_regex,
+                            version,
+                            major_minor=True):
     try:
         output = check_vim_command(command)
     except subprocess.CalledProcessError as error:
@@ -47,12 +51,13 @@ def check_interface_version(interface_name, command, version_regex, version):
     interface_version = match.group(1)
     if not version:
         return interface_version
-    major_minor_version = get_major_minor_version(version)
-    if interface_version != major_minor_version:
+    if major_minor:
+        version = get_major_minor_version(version)
+    if interface_version != version:
         sys.exit('{0} versions do NOT match: interface is {1} '
                  'but given version is {2}'.format(interface_name,
                                                    interface_version,
-                                                   major_minor_version))
+                                                   version))
     return interface_version
 
 
@@ -87,8 +92,9 @@ def check_python3_interface_version(version):
 def check_racket_interface_version(version):
     return check_interface_version('Racket',
                                    'mzscheme (display (version))',
-                                   '(\d+.\d+)',
-                                   version)
+                                   '(\d+.\d+(?:.\d+)?)',
+                                   version,
+                                   False)
 
 
 def check_ruby_interface_version(version):

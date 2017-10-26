@@ -9,7 +9,7 @@ interfaces:
  - [Perl 5.24](https://www.activestate.com/activeperl/downloads);
  - [Python 2.7](https://www.python.org/downloads/release/python-2713/);
  - [Python 3.6](https://www.python.org/downloads/release/python-362/);
- - [Racket 6.10](https://racket-lang.org/download/);
+ - [Racket 6.10.1](https://racket-lang.org/download/);
  - [Ruby 2.4](https://rubyinstaller.org/downloads/);
  - [Tcl 8.6](https://www.activestate.com/activetcl/downloads).
 
