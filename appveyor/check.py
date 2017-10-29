@@ -36,78 +36,77 @@ def check_vim_command(command):
 def check_interface_version(interface_name,
                             command,
                             version_regex,
-                            version,
-                            major_minor=True):
+                            expected_version):
     try:
         output = check_vim_command(command)
     except subprocess.CalledProcessError as error:
-        if not version:
+        if not expected_version:
             return None
         sys.exit(error.output.decode('utf8'))
+    print(output)
     match = re.match(version_regex, output)
     if not match:
         sys.exit('Cannot match {0} version "{1}" returned by Vim. '
                  'Fix the script!'.format(interface_name, output))
-    interface_version = match.group(1)
-    if not version:
+    groups = match.groups()
+    interface_version = '.'.join(groups)
+    if not expected_version:
         return interface_version
-    if major_minor:
-        version = get_major_minor_version(version)
-    if interface_version != version:
+    expected_version = '.'.join(expected_version.split('.')[:len(groups)])
+    if interface_version != expected_version:
         sys.exit('{0} versions do NOT match: interface is {1} '
                  'but given version is {2}'.format(interface_name,
                                                    interface_version,
-                                                   version))
+                                                   expected_version))
     return interface_version
 
 
 def check_lua_interface_version(version):
     return check_interface_version('Lua',
                                    'lua print(_VERSION)',
-                                   'Lua (\d+.\d+)',
+                                   'Lua (\d+).(\d+)',
                                    version)
 
 
 def check_perl_interface_version(version):
     return check_interface_version('Perl',
                                    'perl print $^V',
-                                   'v(\d+.\d+).\d+',
+                                   'v(\d+).(\d+).(\d+)',
                                    version)
 
 
 def check_python2_interface_version(version):
     return check_interface_version('Python 2',
                                    'python print(sys.version)',
-                                   '(\d+.\d+).\d+',
+                                   '(\d+).(\d+).(\d+)',
                                    version)
 
 
 def check_python3_interface_version(version):
     return check_interface_version('Python 3',
                                    'python3 print(sys.version)',
-                                   '(\d+.\d+).\d+',
+                                   '(\d+).(\d+).(\d+)',
                                    version)
 
 
 def check_racket_interface_version(version):
     return check_interface_version('Racket',
                                    'mzscheme (display (version))',
-                                   '(\d+.\d+(?:.\d+)?)',
-                                   version,
-                                   False)
+                                   '(\d+).(\d+)(:?.(\d+))',
+                                   version)
 
 
 def check_ruby_interface_version(version):
     return check_interface_version('Ruby',
                                    'ruby puts RUBY_VERSION',
-                                   '(\d+.\d+).\d+',
+                                   '(\d+).(\d+).(\d+)',
                                    version)
 
 
 def check_tcl_interface_version(version):
     return check_interface_version('Tcl',
                                    'tcl puts $tcl_version',
-                                   '(\d+.\d+)',
+                                   '(\d+).(\d+)',
                                    version)
 
 
