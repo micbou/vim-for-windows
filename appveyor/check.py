@@ -43,7 +43,6 @@ def check_interface_version(interface_name,
         if not expected_version:
             return None
         sys.exit(error.output.decode('utf8'))
-    print(output)
     match = re.match(version_regex, output)
     if not match:
         sys.exit('Cannot match {0} version "{1}" returned by Vim. '
@@ -92,21 +91,21 @@ def check_python3_interface_version(version):
 def check_racket_interface_version(version):
     return check_interface_version('Racket',
                                    'mzscheme (display (version))',
-                                   '(\d+).(\d+)(:?.(\d+))',
+                                   '(\d+).(\d+)(?:.(\d+))?',
                                    version)
 
 
 def check_ruby_interface_version(version):
     return check_interface_version('Ruby',
                                    'ruby puts RUBY_VERSION',
-                                   '(\d+).(\d+).(\d+)',
+                                   '(\d+).(\d+)',
                                    version)
 
 
 def check_tcl_interface_version(version):
     return check_interface_version('Tcl',
-                                   'tcl puts $tcl_version',
-                                   '(\d+).(\d+)',
+                                   'tcl puts [info patchlevel]',
+                                   '(\d+).(\d+).(\d+)',
                                    version)
 
 
