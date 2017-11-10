@@ -9,7 +9,7 @@ interfaces:
  - [Perl 5.26](https://www.activestate.com/activeperl/downloads);
  - [Python 2.7](https://www.python.org/downloads/release/python-2714/);
  - [Python 3.6](https://www.python.org/downloads/release/python-363/);
- - [Racket 6.10.1](https://racket-lang.org/download/);
+ - [Racket 6.11](https://racket-lang.org/download/);
  - [Ruby 2.4](https://rubyinstaller.org/downloads/);
  - [Tcl 8.6](https://www.activestate.com/activetcl/downloads).
 
@@ -19,7 +19,7 @@ for Python 2):
  - add Lua root folder to load `lua53.dll`;
  - add Perl `bin` folder to load `perl526.dll`;
  - add Python 3 root folder to load `python36.dll`;
- - add Racket `lib` folder to load `libracket3m_a36f0g.dll`;
+ - add Racket `lib` folder to load `libracket3m_a3rum8.dll`;
  - add Ruby `bin` and `bin\ruby_builtin_dlls` folders to load
    `msvcrt-ruby240.dll` on 32-bit or `x64-msvcrt-ruby240.dll` on 64-bit;
  - add Tcl `bin` folder to load `tcl86t.dll`.

@@ -48,7 +48,7 @@ def check_interface_version(interface_name,
         sys.exit('Cannot match {0} version "{1}" returned by Vim. '
                  'Fix the script!'.format(interface_name, output))
     groups = match.groups()
-    interface_version = '.'.join(groups)
+    interface_version = '.'.join( [ group for group in groups if group ] )
     if not expected_version:
         return interface_version
     expected_version = '.'.join(expected_version.split('.')[:len(groups)])
