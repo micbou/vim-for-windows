@@ -14,7 +14,7 @@ environment:
     racket_version: 6.12
     # https://rubyinstaller.org/
     # NOTE: this is Ruby API version.
-    ruby_version: 2.4.0
+    ruby_version: 2.5.0
     # https://downloads.activestate.com/ActiveTcl/releases
     tcl32_version: 8.6.6.8607
     tcl32_revision: 403667
