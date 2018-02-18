@@ -14,11 +14,11 @@ environment:
     # https://rubyinstaller.org/
     # NOTE: this is Ruby API version.
     ruby_version: 2.4.0
-    # https://www.activestate.com/activetcl/downloads
+    # https://downloads.activestate.com/ActiveTcl/releases
     tcl32_version: 8.6.6.8607
     tcl32_revision: 403667
-    tcl64_version: 8.6.6.8606
-    tcl64_revision: 401995
+    tcl64_version: 8.6.7.0
+    tcl64_revision: 404764
     vim_compilation_credit: micbou <contact@micbou.com>
     bintray_username: micbou
     bintray_api_key:
