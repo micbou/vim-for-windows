@@ -6,7 +6,7 @@
 Vim 32-bit and 64-bit releases for Windows including support for the following
 interfaces:
  - [Lua 5.3](https://sourceforge.net/projects/luabinaries/files/);
- - [Perl 5.26](https://www.activestate.com/activeperl/downloads);
+ - [Perl 5.26](https://downloads.activestate.com/ActivePerl/releases);
  - [Python 2.7](https://www.python.org/downloads/release/python-2714/);
  - [Python 3.6](https://www.python.org/downloads/release/python-363/);
  - [Racket 6.12](https://racket-lang.org/download/);
