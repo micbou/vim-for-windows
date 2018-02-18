@@ -10,7 +10,7 @@ environment:
     python2_version: 2.7.14
     python3_version: 3.6.4
     # https://racket-lang.org/download/
-    racket_version: 6.11
+    racket_version: 6.12
     # https://rubyinstaller.org/
     # NOTE: this is Ruby API version.
     ruby_version: 2.4.0
