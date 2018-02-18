@@ -22,12 +22,12 @@ $env:PATH = "C:\Lua;$env:PATH"
 
 If ($env:arch -eq 32) {
     $perl_arch = "x86-64int"
+    $env:perl_version = $env:perl32_version
     $perl_revision = $env:perl32_revision
-    $env:perl_path = "C:\ActivePerl"
 } Else {
     $perl_arch = "x64"
+    $env:perl_version = $env:perl64_version
     $perl_revision = $env:perl64_revision
-    $env:perl_path = "C:\ActivePerl64"
 }
 $perl_installer_name = "ActivePerl-$env:perl_version-MSWin32-$perl_arch-$perl_revision.exe"
 $perl_url = "http://downloads.activestate.com/ActivePerl/releases/$env:perl_version/$perl_installer_name"
@@ -35,6 +35,7 @@ $perl_output = "$env:APPVEYOR_BUILD_FOLDER\downloads\$perl_installer_name"
 Invoke-Download $perl_url $perl_output
 New-Item C:\TempActivePerl -ItemType directory | Out-Null
 Start-Process "$perl_output" -ArgumentList "/extract:C:\TempActivePerl /exenoui /exnoupdates /quiet /norestart" -Wait
+$env:perl_path = "C:\ActivePerl"
 Move-Item C:\TempActivePerl\* $env:perl_path
 $env:PATH = "$env:perl_path\bin;$env:PATH"
 

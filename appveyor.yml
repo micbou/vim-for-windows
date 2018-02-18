@@ -2,10 +2,11 @@ version: "{build}"
 environment:
     # https://sourceforge.net/projects/luabinaries/files/
     lua_version: 5.3.4
-    # https://www.activestate.com/activeperl/downloads
-    perl_version: 5.26.0.2600
+    # https://downloads.activestate.com/ActivePerl/releases
+    perl32_version: 5.26.0.2600
     perl32_revision: 403866
-    perl64_revision: 403866
+    perl64_version: 5.26.1.2601
+    perl64_revision: 404865
     # https://www.python.org/downloads/
     python2_version: 2.7.14
     python3_version: 3.6.4
