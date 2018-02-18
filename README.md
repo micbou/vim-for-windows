@@ -11,7 +11,7 @@ interfaces:
  - [Python 3.6](https://www.python.org/downloads/release/python-363/);
  - [Racket 6.12](https://racket-lang.org/download/);
  - [Ruby 2.4](https://rubyinstaller.org/downloads/);
- - [Tcl 8.6](https://www.activestate.com/activetcl/downloads).
+ - [Tcl 8.6](https://downloads.activestate.com/ActiveTcl/releases).
 
 You need to download and install these softwares to use the corresponding
 interfaces in Vim. Once installed, add their libraries to your `PATH` (except
