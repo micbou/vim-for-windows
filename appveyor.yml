@@ -9,7 +9,7 @@ environment:
     perl64_revision: 404865
     # https://www.python.org/downloads/
     python2_version: 2.7.15
-    python3_version: 3.6.6
+    python3_version: 3.7.0
     # https://racket-lang.org/download/
     racket_version: 6.12
     # https://rubyinstaller.org/
