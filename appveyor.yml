@@ -9,7 +9,6 @@ environment:
     perl64_revision: 404865
     # https://www.python.org/downloads/
     python2_version: 2.7.15
-    python3_version: 3.6.6
     # https://racket-lang.org/download/
     racket_version: 6.12
     # https://rubyinstaller.org/
@@ -41,9 +40,20 @@ environment:
         #   objects and libraries
         #
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-          arch: 32
+          arch: 64
+          python3_version: 3.3.5
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
           arch: 64
+          python3_version: 3.4.4
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+          arch: 64
+          python3_version: 3.5.3
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+          arch: 64
+          python3_version: 3.6.6
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+          arch: 64
+          python3_version: 3.7.0
 install:
     - ps: appveyor\variables.ps1
     - ps: appveyor\install.ps1
