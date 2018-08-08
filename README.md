@@ -18,7 +18,7 @@ interfaces in Vim. Once installed, add their libraries to your `PATH` (except
 for Python 2):
  - add Lua root folder to load `lua53.dll`;
  - add Perl `bin` folder to load `perl526.dll`;
- - add Python 3 root folder to load `python36.dll`;
+ - add Python 3 root folder to load `python37.dll`;
  - add Racket `lib` folder to load `libracket3m_bkrfgg.dll`;
  - add Ruby `bin` folder to load `msvcrt-ruby250.dll` on 32-bit or
    `x64-msvcrt-ruby250.dll` on 64-bit;
