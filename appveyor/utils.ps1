@@ -108,7 +108,7 @@ Function Retry-Command
             If ($retrycount -ge $retries) {
                 Throw
             } Else {
-                Start-Host $secondsDelay
+                Start-Sleep $secondsDelay
                 $retrycount++
             }
         }
