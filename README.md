@@ -1,6 +1,10 @@
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/twwsyen7192tjq17/branch/master?svg=true)](https://ci.appveyor.com/project/micbou/vim-for-windows/branch/master)
 [![Bintray download](https://api.bintray.com/packages/micbou/generic/vim/images/download.svg)](https://bintray.com/micbou/generic/vim/_latestVersion)
 
+**IMPORTANT:** this project is abandoned since [an official daily updated 64-bit
+installer for Vim is
+available](https://github.com/vim/vim-win32-installer/releases).
+
 # Vim for Windows
 
 Vim 32-bit and 64-bit releases for Windows including support for the following
@@ -25,14 +29,3 @@ for Python 2):
  - add Tcl `bin` folder to load `tcl86t.dll`.
 
 Terminal support is also available (see `:h terminal`).
-
-## Why? There is already nightly official Vim binaries for Windows.
-
-For multiple reasons:
- - 64-bit installer;
- - latest versions of the interfaces;
- - releases available on
-   [Bintray](https://bintray.com/micbou/generic/vim) and announced on
-   [Twitter](https://twitter.com/mic_bou) so downloading them is fast (faster
-   than GitHub) and it's easy to know when there is a new release (just follow
-   the Twitter account).
